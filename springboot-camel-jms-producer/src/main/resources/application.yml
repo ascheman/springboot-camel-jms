@@ -1,0 +1,31 @@
+server:
+  port: 8080
+#  context: /camel
+#camel:
+#  springboot:
+#    name: JmsProducer
+management:
+  port: 8081
+
+endpoints:
+  enabled: false
+  health:
+    enabled: true
+
+amqp:
+  host: localhost
+  port: 5672
+  username: admin
+  password: admin
+
+#spring:
+#  activemq:
+#    broker-url: tcp://${amqp.host}:${amqp.port}
+#    username: ${amqp.username}
+#    password: ${amqp.password}
+
+logging:
+  level:
+    root: debug
+    org.apache.tomcat: info
+    sun.rmi: info

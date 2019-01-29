@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <!-- Camel Routes -->
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="generate-foo-route" streamCache="true">
+            <from id="route-timer" uri="timer:foo?period=1000"/>
+            <bean id="route-new-foo" method="generateFoo" ref="fooGenerator"/>
+            <log id="route-log-foo" message="Generated foo"/>
+            <to id="route-to-foo" uri="amqp:queue:foo"/>
+        </route>
+    </camelContext>
+</beans>
