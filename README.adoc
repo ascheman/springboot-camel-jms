@@ -3,7 +3,17 @@
 This SpringBoot application shows a problem retrieving JMS messages of type `TextMessage` from an ActiveMQ broker.
 
 It consists of a producer component and a consumer component.
-If the consumer tries to retrieve messages from an ActiveMQ broker it cannot automatically convert the message to `TextMessage` but treats them as `ByteMessage`.
+
+If the consumer tries to retrieve messages from the broker it cannot automatically convert a message to `TextMessage` but treats it as `ByteMessage`.
+There is a `JmsListener` which should read the messages from the queue as `TextMessage`:
+
+[source, java]
+----
+...
+include::springboot-jms-consumer/src/main/java/net/aschemann/demo/springboot/jmsconsumer/JmsConsumer.java[lines=13..14]
+...
+----
+
 The `JmsListener` produces warnings like the following, and drops the messages:
 
   org.springframework.jms.listener.adapter.ListenerExecutionFailedException: Listener method could not be invoked with incoming message
@@ -24,7 +34,7 @@ If you want to reproduce the error, you have to perform the following steps
 
   mvn -pl springboot-camel-jms-producer spring-boot:run
 
-* Check that some messages where produced in Queue `foo`: http://localhost:8161/admin/browse.jsp?JMSDestination=foo[]
+* Check that some messages where produced in queue `foo`: http://localhost:8161/admin/browse.jsp?JMSDestination=foo[]
 
 * Check that the messages have the mentioned `jms-msg-type=5` (Property: `JMS_AMQP_MA_x-opt-jms-msg-type`) by clicking on one of them
 +
